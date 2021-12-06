@@ -27,6 +27,9 @@ class User extends Authenticatable
         'email_verified_at',
     ];
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -45,4 +48,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function settings(){
+        return $this->hasOne(Setting::class, 'user_id', 'id');
+    }
 }
