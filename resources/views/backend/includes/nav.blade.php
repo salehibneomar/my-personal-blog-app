@@ -1,9 +1,9 @@
 <div class="header">
     <div class="logo logo-dark">
-        <a href="">
+        <a href="{{ route('author.dashboard') }}">
             <p class="m-4">
-                <img src="{{ asset('images/settings/brainstorming.png') }}" alt="">
-                <img class="logo-fold" src="{{ asset('images/settings/brainstorming.png') }}" alt="">
+                <img src="{{ asset(Auth::user()->settings->logo) }}" >
+                <img class="logo-fold" src="{{ asset(Auth::user()->settings->logo) }}" >
             </p>
         </a>
     </div>
@@ -112,16 +112,16 @@
                             <i class="anticon font-size-10 anticon-right"></i>
                         </div>
                     </a>
-                    <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
+                    <a href="{{ route('author.setting.edit') }}" class="dropdown-item d-block p-h-15 p-v-10">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
-                                <span class="m-l-10">Account Setting</span>
+                                <span class="m-l-10">Setting</span>
                             </div>
                             <i class="anticon font-size-10 anticon-right"></i>
                         </div>
                     </a>
-                    <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
+                    <a href="" class="dropdown-item d-block p-h-15 p-v-10">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <i class="anticon opacity-04 font-size-16 anticon-project"></i>

@@ -14,14 +14,15 @@ class CreateSettingsTable extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table) {
+            $table->tinyIncrements('id');
             $table->string('name', 50);
             $table->string('initial_name', 10);
             $table->string('logo');
-            $table->string('tab_icon');
             $table->string('user_id');
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
+                  ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

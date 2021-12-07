@@ -14,7 +14,6 @@ class Setting extends Model
         'name',
         'initial_name',
         'logo',
-        'tab_icon',
         'user_id',
     ];
 

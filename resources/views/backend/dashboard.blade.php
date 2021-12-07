@@ -1,7 +1,7 @@
 @extends('backend.layout')
 
 @section('page_title')
-Dashboard
+{{ 'Dashboard' }}
 @endsection
 
 @section('main')

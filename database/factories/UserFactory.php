@@ -15,14 +15,14 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        // return [
-        //     'id'   => 'S5210', 
-        //     'name' => 'Author',
-        //     'email' => 'browsing.email.pc@gmail.com',
-        //     'email_verified_at' => now(),
-        //     'password' => Hash::make('12345678') , // password
-        //     'remember_token' => Str::random(10),
-        // ];
+        return [
+            'id'   => 'S5210', 
+            'name' => 'Author',
+            'email' => 'browsing.email.pc@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678') , // password
+            'remember_token' => Str::random(10),
+        ];
     }
 
     /**

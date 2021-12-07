@@ -10,6 +10,13 @@ Route::get('/', function () {
 
 require __DIR__.'/auth.php';
 
-Route::prefix('/author')->name('author.')->middleware('auth')->group(function(){
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::prefix('/author')
+->name('author.')
+->middleware(['auth', 'prevent_back_history'])
+->group(function()
+{
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+         ->name('dashboard');
+
+    require __DIR__.'/setting.php';
 });
