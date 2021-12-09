@@ -19,4 +19,5 @@ Route::prefix('/author')
          ->name('dashboard');
 
     require __DIR__.'/setting.php';
+    require __DIR__.'/profile.php';
 });

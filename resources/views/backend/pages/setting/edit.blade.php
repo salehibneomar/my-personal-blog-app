@@ -55,7 +55,7 @@
                     <form method="POST" action="{{ route('author.setting.logo') }}" class="row" enctype="multipart/form-data">
                         <div class="media align-items-center form-group col-md-12">
                             <div class="avatar avatar-image  m-h-10 m-r-15 avatar-image-custom" >
-                                <img src="{{ asset(Auth::user()->settings->logo) }}" id="image-preview">
+                                <img src="{{ asset($settings->logo) }}" id="image-preview">
                             </div>
                             <div class="m-l-20 m-r-20">
                                 <h5 class="m-b-5 font-size-15">Change Logo</h5>

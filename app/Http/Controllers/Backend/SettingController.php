@@ -70,7 +70,7 @@ class SettingController extends Controller
 
         $location  = 'images/settings/';
         $imageName = 'logo.png';
-        $imageFile = $request->logo;
+        $imageFile = $request->file('logo');
         
         Image::make($imageFile)->resize(32, 32)->save($location.$imageName);
 
