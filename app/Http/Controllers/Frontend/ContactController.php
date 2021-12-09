@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Jenssegers\Agent\Agent;
+use Illuminate\Support\Str;
+use App\Traits\AlertTrait;
+// use Stevebauman\Location\Facades\Location;
 
 class ContactController extends Controller
 {
+
+    use AlertTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,16 +29,6 @@ class ContactController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,51 +36,63 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $request->validate(
+        [
+            'sender_name'  => 'required|min:3|max:100',
+            'sender_email' => 'required|email',
+            'subject'      => 'required|min:3|max: 250',
+            'body'         => 'required|min:2|max: 65000'
+        ],
+        [
+            'sender_name.required' => 'Name is required',
+            'sender_name.min' => 'Name should be at least 3 characters in length!',
+            'sender_name.max' => 'Keep the name within 100 characters!',
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+            'sender_email.required' => 'Email is required',
+            'sender_email.email' => 'Must be a valid email!',
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            'subject.required' => 'Subject is required',
+            'subject.min' => 'Subject should be at least 3 characters in length!',
+            'subject.max' => 'Keep the subject within 250 characters!',
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+            'body.required' => 'Message body is required!',
+            'body.min' => 'At least say Hi',
+        ]);
+
+        $ifExistsByIpAndDate = (Message::where('sender_ip', $request->ip())
+                               ->whereDate('created_at', date('Y-m-d'))
+                               ->get())->count();
+        
+        if($ifExistsByIpAndDate){
+            return back()->with($this->failed('You cannot send more than 1 message in a day, try again tomorrow!'));
+        }                    
+
+        $client = new Agent();
+
+        $sender_information = 
+        [
+            'Platform' => $client->platform().' '.$client->version($client->platform()),
+            'Browser' => $client->browser(),
+            'Is_mobile' => $client->device(),
+            'Is_desktop' => $client->isDesktop()
+        ];
+        
+        $sender_information = Str::replace(['{', '}', '"', ','], 
+                             ['', '', ' ', ','], 
+                             json_encode($sender_information));
+
+        $message = new Message();
+        $message->sender_name        = $request->sender_name;
+        $message->sender_email       = $request->sender_email;
+        $message->subject            = $request->subject; 
+        $message->body               = $request->body;
+        $message->sender_ip          = $request->ip();
+        $message->sender_information = $sender_information;
+        
+        $message->save();
+
+        return back()->with($this->successful('Your message has been sent successfully, thank you for contacting us!'));
+    }   
+
 }
