@@ -65,13 +65,23 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h5>Bio</h5>
                     <p>
                         {{ Auth::user()->bio }}
                     </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Banner</h5>
+                    <div >
+                        <img class="img-fluid" src="{{ asset(Auth::user()->banner) }}" >
+                    </div>
                 </div>
             </div>
         </div>

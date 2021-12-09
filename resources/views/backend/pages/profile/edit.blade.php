@@ -72,7 +72,7 @@
                                 <h5 class="m-b-5 font-size-15">Change Image</h5>
                                 <p class="opacity-07 font-size-13 m-b-0">
                                     Recommended Dimensions: <br>
-                                    49x49 Max fil size: 3MB
+                                    200x200 Max fil size: 3MB
                                 </p>
                             </div>
                         </div>

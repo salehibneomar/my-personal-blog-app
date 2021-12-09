@@ -85,6 +85,7 @@ p.p-intro {
 	-webkit-animation: smooth-entry-btn 1s;
 	-moz-animation: smooth-entry-btn 1s;
 	animation: smooth-entry-btn 1s;
+    overflow-wrap: break-word;
 }
 p.p-intro:after {
     content: '';

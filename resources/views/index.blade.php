@@ -5,14 +5,16 @@ Home
 @endsection
 
 @section('banner')
-    <div class="intro" style="background: url({{ asset('images/settings/95953_banner.jpg') }}) #F7F7F7 center top;">
+    <div class="intro" style="background: url({{ asset($site_info->banner) }}) #F7F7F7 center top;">
         <div class="container">
             <div class="units-row">
                 <div class="unit-10">
-                    <img class="img-intro" src="{{ asset('images/settings/68109_profile.jpg') }}" alt="">
+                    <img class="img-intro" src="{{ asset($site_info->image) }}" alt="Image" title="Image">
                 </div>
                 <div class="unit-90">
-                    <p class="p-intro">Hello, I’m Saturn. I’m proud to be a part of milky way.</p>
+                    <p class="p-intro" title="BIO">
+                        {{ $site_info->bio }}
+                    </p>
                 </div>
             </div>
         </div>

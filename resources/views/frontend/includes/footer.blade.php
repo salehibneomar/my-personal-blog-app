@@ -4,7 +4,7 @@
         @yield('main_pagination')
 
         <p class="text-centered foot-cp">
-            <a href="#">&copy; SITE NAME</a>
+            <a href="{{ route('index') }}" title="{{ $site_info->settings->name }}">&copy; {{ date('Y').', '.$site_info->settings->name }}</a>
         </p>
     </div>
 </footer>
