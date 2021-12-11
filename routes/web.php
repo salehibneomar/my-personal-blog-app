@@ -23,4 +23,5 @@ Route::prefix('/author')
 
     require __DIR__.'/setting.php';
     require __DIR__.'/profile.php';
+    require __DIR__.'/message.php';
 });

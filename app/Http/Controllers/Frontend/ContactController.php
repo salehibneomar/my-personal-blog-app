@@ -7,9 +7,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Jenssegers\Agent\Agent;
-use Illuminate\Support\Str;
 use App\Traits\AlertTrait;
-// use Stevebauman\Location\Facades\Location;
 
 class ContactController extends Controller
 {
@@ -72,15 +70,12 @@ class ContactController extends Controller
 
         $sender_information = 
         [
+            'Device'  => $client->isDesktop() ? 'Desktop' : $client->device(),
             'Platform' => $client->platform().' '.$client->version($client->platform()),
             'Browser' => $client->browser(),
-            'Is_mobile' => $client->device(),
-            'Is_desktop' => $client->isDesktop()
         ];
         
-        $sender_information = Str::replace(['{', '}', '"', ','], 
-                             ['', '', ' ', ','], 
-                             json_encode($sender_information));
+        $sender_information = json_encode($sender_information);
 
         $message = new Message();
         $message->sender_name        = $request->sender_name;
