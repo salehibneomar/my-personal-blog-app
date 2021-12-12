@@ -13,6 +13,31 @@
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
                     <span class="icon-holder">
+                        <i class="anticon anticon-profile"></i>
+                    </span>
+                    <span class="title">Post</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ route('author.post.all') }}">Manage</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('author.post.create', ['type'=>'status']) }}">Status</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('author.post.create', ['type'=>'picture']) }}">Picture</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('author.post.create', ['type'=>'blog']) }}">Blog</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
                         <i class="anticon anticon-message"></i>
                     </span>
                     <span class="title">Message</span>

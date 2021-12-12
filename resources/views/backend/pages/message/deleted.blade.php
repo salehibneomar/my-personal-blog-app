@@ -15,12 +15,12 @@
                     <table id="data-table" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <td >Sender</td>
-                                <td >Email</td>
-                                <td >Subject</td>
-                                <td style="width:10% ;">IP</td>
-                                <td style="width:10% ;">Date</td>
-                                <td style="width:5% ;">Status</td>
+                                <th >Sender</th>
+                                <th >Email</th>
+                                <th >Subject</th>
+                                <th style="width:10% ;">IP</th>
+                                <th style="width:10% ;">Date</th>
+                                <th style="width:5% ;">Status</th>
                                 <th style="width:15% ;">Action</th>
                             </tr>
                         </thead>
