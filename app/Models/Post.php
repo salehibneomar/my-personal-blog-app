@@ -11,6 +11,7 @@ class Post extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'uniq_code',
         'title',
         'image',
         'details',
@@ -21,6 +22,7 @@ class Post extends Model
 
     protected $hidden = [
         'id',
+        'uniq_code',
         'user_id',
     ];
 }

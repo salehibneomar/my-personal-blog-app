@@ -15,12 +15,13 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
+            $table->string('uniq_code')->nullable();
+            $table->string('title')->nullable();
             $table->string('image')->nullable();
             $table->mediumText('details')->nullable();
             $table->boolean('type')
                   ->comment('1=status, 2=image_post, 3=blog_post');
-            $table->string('slug');      
+            $table->string('slug')->nullable();      
             $table->string('user_id');
             $table->foreign('user_id')
                   ->references('id')

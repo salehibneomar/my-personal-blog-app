@@ -7,7 +7,7 @@ use App\Models\Message;
 use App\Traits\AlertTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 use Stevebauman\Location\Facades\Location;
 
 class MessageController extends Controller

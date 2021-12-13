@@ -168,10 +168,10 @@
             else{
                 imageSize = imageSize.toString()+' KB';
             }
-            $('#image-size').text('Selected Logo size: '+imageSize);
+            $('#image-size').text('Selected image size: '+imageSize);
         });
 
-        $( "#bio" ).keyup(function() {
+        $("#bio").keyup(function() {
             let textChars = ($(this).val().trim()).length;
             $('#bio-length').text(textChars+' /150');
         });
