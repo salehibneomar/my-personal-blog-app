@@ -23,8 +23,8 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        $posts = DB::table('posts')->whereNull('deleted_at')->get();
         if($request->ajax()){
-            $posts = DB::table('posts')->whereNull('deleted_at')->get();
             $data = DataTables::of($posts)
                                 ->editColumn('id', '#{{ $id }}')
                                 ->editColumn('title', function($row){
@@ -56,7 +56,7 @@ class PostController extends Controller
 
                                     $edit = '<a href="" class="btn btn-sm  btn-icon  btn-success btn-rounded"><i class="anticon anticon-form"></i></a>';
 
-                                    $delete = '<a href="" class="btn btn-sm btn-icon   btn-danger btn-rounded delete-button"><i class="anticon anticon-delete"></i></a>';
+                                    $delete = '<a href="'.route('author.post.delete', ['id'=>$row->id]).'" class="btn btn-sm btn-icon   btn-danger btn-rounded delete-button"><i class="anticon anticon-delete"></i></a>';
 
                                     $data = $row->type==1 ? $edit.' '.$delete : $view.' '.$edit.' '.$delete;
                                     return $data;
@@ -66,6 +66,50 @@ class PostController extends Controller
             return $data;                    
         }
         return view('backend.pages.post.all');
+    }
+
+    public function deletedMessages(Request $request)
+    {
+        $posts = DB::table('posts')->whereNotNull('deleted_at')->get();
+        if($request->ajax()){
+            $data = DataTables::of($posts)
+                                ->editColumn('id', '#{{ $id }}')
+                                ->editColumn('title', function($row){
+                                    $title = is_null($row->title) ? '<span class="badge badge-pill badge-orange">N/A</span>' : $row->title;
+                                    return $title;
+                                })
+                                ->editColumn('image', function($row){
+                                    $image = is_null($row->image) ? '<span class="badge badge-pill badge-orange">N/A</span>' : '<img src="'.asset($row->image).'" width="60" height="60" >';
+                                    return $image;
+                                })
+                                ->editColumn('type', function($row){
+                                    $type = null;
+                                    switch($row->type){
+                                        case 2:
+                                            $type = 'Picture';
+                                        break;
+                                        case 3:
+                                            $type = 'Blog';
+                                        break;
+                                        default:
+                                            $type = 'Status';  
+                                    }
+                                    return '<span class="badge badge-pill badge-geekblue">'.$type.'</span>';
+                                })
+                                ->editColumn('created_at',
+                                '{{ date("d M Y", strtotime($created_at)) }}')
+                                ->addColumn('action', function($row){
+                                    $view = '<a href="" class="btn btn-sm  btn-icon  btn-primary btn-rounded"><i class="anticon anticon-eye"></i></a>';
+
+                                    $undo = '<a href="'.route('author.post.restore', ['id'=>$row->id]).'" class="btn btn-sm btn-icon   btn-success btn-rounded restore-button"><i class="anticon anticon-undo"></i></a>';
+ 
+                                    return $view.' '.$undo;
+                                })
+                                ->rawColumns(['image', 'title', 'type', 'action'])
+                                ->make(true);
+            return $data;                    
+        }
+        return view('backend.pages.post.deleted');
     }
 
     /**
@@ -208,6 +252,16 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::withoutTrashed()->findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('author.post.deleted')->with($this->successful('Post deleted!'));
+    }
+
+    public function undoDelete($id){
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->restore();
+
+        return redirect()->route('author.post.all')->with($this->successful('Post restored!'));
     }
 }

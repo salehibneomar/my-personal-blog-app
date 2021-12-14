@@ -22,16 +22,19 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ route('author.post.all') }}">Manage</a>
+                        <a href="{{ route('author.post.all') }}">All</a>
                     </li>
                     <li>
-                        <a href="{{ route('author.post.create', ['type'=>'status']) }}">Status</a>
+                        <a href="{{ route('author.post.create', ['type'=>'status']) }}">Add Status</a>
                     </li>
                     <li>
-                        <a href="{{ route('author.post.create', ['type'=>'picture']) }}">Picture</a>
+                        <a href="{{ route('author.post.create', ['type'=>'picture']) }}">Add Picture</a>
                     </li>
                     <li>
-                        <a href="{{ route('author.post.create', ['type'=>'blog']) }}">Blog</a>
+                        <a href="{{ route('author.post.create', ['type'=>'blog']) }}">Add Blog</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('author.post.deleted') }}">Deleted</a>
                     </li>
                 </ul>
             </li>
