@@ -16,6 +16,7 @@ class PostController extends Controller
 {
 
     use AlertTrait;
+    
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +33,7 @@ class PostController extends Controller
                                     return $title;
                                 })
                                 ->editColumn('image', function($row){
-                                    $image = is_null($row->image) ? '<span class="badge badge-pill badge-orange">N/A</span>' : '<img src="'.asset($row->image).'" width="60" height="60" >';
+                                    $image = is_null($row->image) ? '<span class="badge badge-pill badge-orange">N/A</span>' : '<img src="'.asset($row->image).'" width="80" height="60" >';
                                     return $image;
                                 })
                                 ->editColumn('type', function($row){
@@ -52,7 +53,7 @@ class PostController extends Controller
                                 ->editColumn('created_at',
                                 '{{ date("d M Y", strtotime($created_at)) }}')
                                 ->addColumn('action', function($row){
-                                    $view = '<a href="" class="btn btn-sm  btn-icon  btn-primary btn-rounded"><i class="anticon anticon-eye"></i></a>';
+                                    $view = '<a href="'.route('author.post.show', ['id'=>$row->id]).'" class="btn btn-sm  btn-icon  btn-primary btn-rounded"><i class="anticon anticon-eye"></i></a>';
 
                                     $edit = '<a href="" class="btn btn-sm  btn-icon  btn-success btn-rounded"><i class="anticon anticon-form"></i></a>';
 
@@ -99,7 +100,7 @@ class PostController extends Controller
                                 ->editColumn('created_at',
                                 '{{ date("d M Y", strtotime($created_at)) }}')
                                 ->addColumn('action', function($row){
-                                    $view = '<a href="" class="btn btn-sm  btn-icon  btn-primary btn-rounded"><i class="anticon anticon-eye"></i></a>';
+                                    $view = '<a href="'.route('author.post.show', ['id'=>$row->id]).'" class="btn btn-sm  btn-icon  btn-primary btn-rounded"><i class="anticon anticon-eye"></i></a>';
 
                                     $undo = '<a href="'.route('author.post.restore', ['id'=>$row->id]).'" class="btn btn-sm btn-icon   btn-success btn-rounded restore-button"><i class="anticon anticon-undo"></i></a>';
  
@@ -148,7 +149,7 @@ class PostController extends Controller
             $this->picture($request, 'store');
         }
         else if($type=='blog'){
-            
+            $this->blog($request, 'store');
         }
         else{
             abort(404);
@@ -158,14 +159,15 @@ class PostController extends Controller
                          ->with($this->successful(Str::ucfirst($type).' posted!'));
     }
 
-    private function status($request, $operation, $id=null){
+    private function status($request, $operation, $id=null)
+    {
         $request->validate([
             'title' => 'required|min:2|max:250'
         ]);
 
         $post = new Post();
         if($operation=='update'){
-            $post = Post::withTrashed($id);
+            $post = Post::withoutTrashed($id);
         }
 
         $post->title = $request->title;
@@ -176,7 +178,8 @@ class PostController extends Controller
         $post->save();
     }
 
-    private function picture($request, $operation, $id=null){
+    private function picture($request, $operation, $id=null)
+    {
         $request->validate([
             'image' => 'required|file|mimes:png,jpg,jpeg|min:1|max:5150',
             'title' => 'nullable|max:100',
@@ -187,7 +190,7 @@ class PostController extends Controller
 
         $post = new Post();
         if($operation=='update'){
-            $post = Post::withTrashed($id);
+            $post = Post::withoutTrashed($id);
             if(file_exists($post->image)){
                 unlink($post->image);
             }
@@ -210,6 +213,50 @@ class PostController extends Controller
 
     }
 
+    private function blog($request, $operation, $id=null){
+        $request->validate([
+            'image' => 'nullable|file|min:1|max:5150',
+            'title' => 'required|min:3|max:250',
+            'details' => 'required|min:10',
+        ],
+        [
+            'image.max' => 'Image size should not be more than 5MB',
+            'details.min' => 'Details should have at least 3 characters!',
+        ]);
+
+        $post = new Post();
+        if($operation=='update'){
+            $post = Post::withoutTrashed($id);
+            if($request->hasFile('image') && !is_null($post->image)){
+                if(file_exists($post->image)){
+                    unlink($post->image);
+                }
+            }
+        }
+
+        if($operation=='store'){
+            $post->type    = 3;
+            $post->user_id = Auth::user()->id;
+        }
+
+        if($request->hasFile('image')){
+            $location  = 'images/post/blog/';
+            $imageFile = $request->file('image');
+            $imageName = hexdec(uniqid()).'_'.date('dmyHis').'.'.$imageFile->getClientOriginalExtension();
+    
+            Image::make($imageFile)->resize(622,342)->save($location.$imageName);
+    
+            $post->image = $location.$imageName;
+        }
+
+        $post->title     = $request->title;
+        $post->details   = $request->details;
+        $post->slug      = Str::slug($request->title);
+        $post->uniq_code = Str::upper(Str::uuid());
+        $post->save();
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -218,7 +265,11 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::withTrashed()
+                    ->where('type', '!=', 1)
+                    ->findOrFail($id);
+
+        return view('backend.pages.post.show', compact('post'));
     }
 
     /**

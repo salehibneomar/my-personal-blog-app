@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="caption">Caption</label>
-                            <input class="form-control" type="text" name="title" id="caption" max="100" autocomplete="off" value="">
+                            <input class="form-control" type="text" name="title" id="caption" max="100" value="{{ old('title') }}">
                             <span class="form-text opacity-07 font-size-13" id="caption-length"></span>
                         </div>
                         <div class="form-group col-md-12">

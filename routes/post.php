@@ -10,4 +10,5 @@ Route::prefix('post')->name('post.')->group(function(){
     Route::post('/store/{type}', [PostController::class, 'store'])->name('store');
     Route::get('/delete/{id}', [PostController::class, 'destroy'])->name('delete');
     Route::get('/restore/{id}', [PostController::class, 'undoDelete'])->name('restore');
+    Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
 });
