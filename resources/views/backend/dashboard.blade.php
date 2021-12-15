@@ -73,20 +73,10 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5>Total Revenue</h5>
-                    <div>
-                        <div class="btn-group">
-                            <button class="btn btn-default active">
-                                <span>Month</span>
-                            </button>
-                            <button class="btn btn-default">
-                                <span>Year</span>
-                            </button>
-                        </div>
-                    </div>
+                    <h5>Post Per Months</h5>
                 </div>
-                <div class="m-t-50" style="height: 330px">
-                    <canvas class="chart" id="revenue-chart"></canvas>
+                <div class="m-t-10" >
+                    <canvas class="chart" id="line-chart"></canvas>
                 </div>
             </div>
         </div>
@@ -94,70 +84,113 @@
     <div class="col-md-12 col-lg-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="m-b-0">Customers</h5>
-                <div class="m-v-60 text-center" style="height: 200px">
-                    <canvas class="chart" id="customers-chart"></canvas>
-                </div>
-                <div class="row border-top p-t-25">
-                    <div class="col-4">
-                        <div class="d-flex justify-content-center">
-                            <div class="media align-items-center">
-                                <span class="badge badge-success badge-dot m-r-10"></span>
-                                <div class="m-l-5">
-                                    <h4 class="m-b-0">350</h4>
-                                    <p class="m-b-0 muted">New</p>
-                                </div>    
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="d-flex justify-content-center">
-                            <div class="media align-items-center">
-                                <span class="badge badge-secondary badge-dot m-r-10"></span>
-                                <div class="m-l-5">
-                                    <h4 class="m-b-0">450</h4>
-                                    <p class="m-b-0 muted">Returning</p>
-                                </div>    
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="d-flex justify-content-center">
-                            <div class="media align-items-center">
-                                <span class="badge badge-warning badge-dot m-r-10"></span>
-                                <div class="m-l-5">
-                                    <h4 class="m-b-0">100</h4>
-                                    <p class="m-b-0 muted">Others</p>
-                                </div>    
-                            </div>
-                        </div>
-                    </div>
+                <h5 class="m-b-0">Post Ratio</h5>
+                <div class="m-v-30 text-center">
+                    <canvas class="chart" id="doughnut-chart"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12 col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h2 class="m-b-0">$17,267</h2>
-                        <p class="m-b-0 text-muted">Avg.Profit</p>
-                    </div>
-                    <div>
-                        <span class="badge badge-pill badge-cyan font-size-12">
-                            <span class="font-weight-semibold m-l-5">+5.7%</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="m-t-50" style="height: 375px">
-                     <canvas class="chart" id="avg-profit-chart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+@endsection
+
+@section('extra_script')
+
+<script src="{{ asset('backend/assets/vendors/chartjs/chart.js') }}"></script>
+
+<script>
+    
+    $(document).ready(function(){
+        const date = new Date();
+        let year = date.getFullYear();
+
+        const lineChartMonths = [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec'
+            ];
+
+        const lineChartData = {
+        labels: lineChartMonths,
+        datasets: [{
+                label: year+' Post Uploads',
+                backgroundColor: 'rgba(87, 88, 187, 0.9)',
+                borderColor: 'rgba(237, 76, 103, 0.9)',
+                data: {{ $line_chart_data }},
+            }]
+        };
+
+        const lineChartConfig = {
+            type: 'line',
+            data: lineChartData,
+            options: {
+                scales: {
+                    y: {
+                        title: {
+                        display: true,
+                        align: 'center',
+                        text: 'Counts',
+                    },
+                    min: 0,
+                    ticks: {
+                        stepSize: 5
+                    }
+                    },
+                    x: {
+                        title: {
+                        display: true,
+                        align: 'center',
+                        text: 'Months',
+                    }
+                    }
+                }
+            }
+        };
+
+        const lineChart = new Chart(
+            document.getElementById('line-chart'),
+            lineChartConfig
+        );
+
+        const doughnutChartData = {
+            labels: [
+                'Status',
+                'Picture',
+                'Blog'
+            ],
+            datasets: [{
+                data: {{ $doughnut_chart_data }},
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(120, 224, 143, 0.9)',
+                'rgba(74, 105, 189, 0.9)'
+                ],
+                hoverOffset: 2
+            }]
+        };
+
+        const doughnutChartConfig = {
+            type: 'doughnut',
+            data: doughnutChartData,
+        };
+
+        const doughnutChart = new Chart(
+            document.getElementById('doughnut-chart'),
+            doughnutChartConfig
+        );
+    });
+
+</script>
 
 @endsection

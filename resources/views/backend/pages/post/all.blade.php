@@ -53,8 +53,9 @@
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
               ],
-              "order": [[ 0, "desc" ]],
-              "lengthMenu": ["10", "20"]
+              order: [[ 0, "desc" ]],
+              lengthMenu: ["10", "20"],
+              pageLength: 10, 
             });
 
             $('table').on('click', '.delete-button', function(e){

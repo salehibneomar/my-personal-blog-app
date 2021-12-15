@@ -55,8 +55,9 @@
                     {data: 'seen_status', name: 'seen_status'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
               ],
-              "order": [[ 5, "desc" ]],
-              "lengthMenu": ["10", "20"]
+              order: [[ 5, "desc" ]],
+              lengthMenu: ["10", "20"],
+              pageLength: 10,
             });
 
             $('table').on('click', '.delete-button', function(e){
