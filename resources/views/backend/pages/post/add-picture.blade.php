@@ -34,8 +34,8 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="caption">Caption</label>
-                            <input class="form-control" type="text" name="title" id="caption" max="100" value="{{ old('title') }}">
-                            <span class="form-text opacity-07 font-size-13" id="caption-length"></span>
+                            <input class="form-control" type="text" name="title" id="title" max="100" value="{{ old('title') }}">
+                            <span class="form-text opacity-07 font-size-13" id="title-length"></span>
                         </div>
                         <div class="form-group col-md-12">
                             <button type="submit" class="btn btn-primary btn-tone m-r-5">POST</button>
@@ -52,9 +52,9 @@
 @section('extra_script')
     <script>
         $(document).ready(function(){
-            $("#caption").keyup(function() {
+            $("#title").keyup(function() {
                 let textChars = ($(this).val().trim()).length;
-                $('#caption-length').text(textChars+' /100');
+                $('#title-length').text(textChars+' /100');
             });
             $('#selected-image').change(function(e){
                 let reader    = new FileReader();
