@@ -60,9 +60,16 @@ class DashboardController extends Controller
 
         $doughnut_chart_data = json_encode(array_values($doughnut_chart_data));
         
+        $dashboard_counts = DB::select('SELECT 
+        (SELECT COUNT(*) FROM posts WHERE deleted_at IS NULL ) AS post_count, 
+        (SELECT COUNT(*) FROM messages WHERE deleted_at IS NULL ) AS message_count ');
+
+        $dashboard_counts = collect($dashboard_counts)->first();
+
         return view('backend.dashboard', 
                compact('line_chart_data', 
-                       'doughnut_chart_data'));
+                       'doughnut_chart_data',
+                        'dashboard_counts'));
     }
 
 }

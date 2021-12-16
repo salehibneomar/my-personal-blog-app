@@ -4,6 +4,7 @@
 <script src="{{ asset('backend/assets/js/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('backend/assets/vendors/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('backend/assets/vendors/datatables/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('backend/assets/vendors/datatables/dataTables.responsive.min.js') }}"></script>
 
 <script>
     $(document).ready(function(){

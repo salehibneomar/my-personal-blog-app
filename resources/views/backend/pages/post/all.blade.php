@@ -15,10 +15,9 @@
                     <table id="data-table" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th style="width: 8%">#ID</th>
-                                <th style="width: 10%">Image</th>
-                                <th>Title/Caption</th>
-                                <th style="width: 5%">Type</th>
+                                <th style="width: 8%">Type</th>
+                                <th style="width: 8%">Image</th>
+                                <th>Title</th>
                                 <th style="width: 12%">Date</th>
                                 <th style="width: 15%">Action</th>
                             </tr>
@@ -46,16 +45,16 @@
                     processing: "Fetching data..."
                 },
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'type', name: 'type'},
                     {data: 'image', name: 'image', orderable: false, searchable: false},
                     {data: 'title', name: 'title'},
-                    {data: 'type', name: 'type'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
               ],
-              order: [[ 0, "desc" ]],
+              order: [[ 3, "desc" ]],
               lengthMenu: ["10", "20"],
-              pageLength: 10, 
+              pageLength: 10,
+              responsive: true,
             });
 
             $('table').on('click', '.delete-button', function(e){

@@ -7,61 +7,46 @@
 @section('main')
 
 <div class="row">
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg-4">
         <div class="card">
             <div class="card-body">
                 <div class="media align-items-center">
                     <div class="avatar avatar-icon avatar-lg avatar-blue">
-                        <i class="anticon anticon-dollar"></i>
+                        <i class="anticon anticon-profile"></i>
                     </div>
                     <div class="m-l-15">
-                        <h2 class="m-b-0">$23,523</h2>
-                        <p class="m-b-0 text-muted">Profit</p>
+                        <h2 class="m-b-0">{{ $dashboard_counts->post_count }}</h2>
+                        <p class="m-b-0 text-muted">Total Posts</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg-4">
         <div class="card">
             <div class="card-body">
                 <div class="media align-items-center">
                     <div class="avatar avatar-icon avatar-lg avatar-cyan">
-                        <i class="anticon anticon-line-chart"></i>
+                        <i class="anticon anticon-project"></i>
                     </div>
                     <div class="m-l-15">
-                        <h2 class="m-b-0">+ 17.21%</h2>
-                        <p class="m-b-0 text-muted">Growth</p>
+                        <h2 class="m-b-0">{{ round($dashboard_counts->post_count/12) }}</h2>
+                        <p class="m-b-0 text-muted">Average post per month</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg-4">
         <div class="card">
             <div class="card-body">
                 <div class="media align-items-center">
                     <div class="avatar avatar-icon avatar-lg avatar-gold">
-                        <i class="anticon anticon-profile"></i>
+                        <i class="anticon anticon-message"></i>
                     </div>
                     <div class="m-l-15">
-                        <h2 class="m-b-0">3,685</h2>
-                        <p class="m-b-0 text-muted">Orders</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="media align-items-center">
-                    <div class="avatar avatar-icon avatar-lg avatar-purple">
-                        <i class="anticon anticon-user"></i>
-                    </div>
-                    <div class="m-l-15">
-                        <h2 class="m-b-0">1,832</h2>
-                        <p class="m-b-0 text-muted">Customers</p>
+                        <h2 class="m-b-0">{{ $dashboard_counts->message_count }}</h2>
+                        <p class="m-b-0 text-muted">Total Messages</p>
                     </div>
                 </div>
             </div>

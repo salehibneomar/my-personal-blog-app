@@ -4,7 +4,10 @@
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="{{ asset(Auth::user()->settings->logo) }}">
+
 <link href="{{ asset('backend/assets/vendors/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('backend/assets/vendors/datatables/responsive.dataTables.min.css') }}">
+
 <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('backend/assets/css/toastr.css') }}">
 

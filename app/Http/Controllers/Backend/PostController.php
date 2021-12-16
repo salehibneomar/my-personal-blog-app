@@ -27,31 +27,30 @@ class PostController extends Controller
         $posts = DB::table('posts')->whereNull('deleted_at')->get();
         if($request->ajax()){
             $data = DataTables::of($posts)
-                                ->editColumn('id', '#{{ $id }}')
                                 ->editColumn('title', function($row){
                                     $title = is_null($row->title) ? '<span class="badge badge-pill badge-orange">N/A</span>' : $row->title;
                                     return $title;
                                 })
                                 ->editColumn('image', function($row){
-                                    $image = is_null($row->image) ? '<span class="badge badge-pill badge-orange">N/A</span>' : '<img src="'.asset($row->image).'" width="70" height="60" >';
+                                    $image = is_null($row->image) ? '<span class="badge badge-pill badge-orange">N/A</span>' : '<img src="'.asset($row->image).'" width="60" height="50" >';
                                     return $image;
                                 })
                                 ->editColumn('type', function($row){
                                     $type = null;
                                     switch($row->type){
                                         case 2:
-                                            $type = 'Picture';
+                                            $type = '<span class="badge badge-pill badge-green">Picture</span>';
                                         break;
                                         case 3:
-                                            $type = 'Blog';
+                                            $type = '<span class="badge badge-pill badge-geekblue">Blog</span>';
                                         break;
                                         default:
-                                            $type = 'Status';  
+                                            $type = '<span class="badge badge-pill badge-magenta">Status</span>';  
                                     }
-                                    return '<span class="badge badge-pill badge-geekblue">'.$type.'</span>';
+                                    return $type;
                                 })
                                 ->editColumn('created_at',
-                                '{{ date("d M Y", strtotime($created_at)) }}')
+                                '{{ date("d-m-Y", strtotime($created_at)) }}')
                                 ->addColumn('action', function($row){
                                     $view = '<a href="'.route('author.post.show', ['id'=>$row->id]).'" class="btn btn-sm  btn-icon  btn-primary btn-rounded"><i class="anticon anticon-eye"></i></a>';
 
@@ -74,28 +73,27 @@ class PostController extends Controller
         $posts = DB::table('posts')->whereNotNull('deleted_at')->get();
         if($request->ajax()){
             $data = DataTables::of($posts)
-                                ->editColumn('id', '#{{ $id }}')
                                 ->editColumn('title', function($row){
                                     $title = is_null($row->title) ? '<span class="badge badge-pill badge-orange">N/A</span>' : $row->title;
                                     return $title;
                                 })
                                 ->editColumn('image', function($row){
-                                    $image = is_null($row->image) ? '<span class="badge badge-pill badge-orange">N/A</span>' : '<img src="'.asset($row->image).'" width="70" height="60" >';
+                                    $image = is_null($row->image) ? '<span class="badge badge-pill badge-orange">N/A</span>' : '<img src="'.asset($row->image).'" width="60" height="50" >';
                                     return $image;
                                 })
                                 ->editColumn('type', function($row){
                                     $type = null;
                                     switch($row->type){
                                         case 2:
-                                            $type = 'Picture';
+                                            $type = '<span class="badge badge-pill badge-green">Picture</span>';
                                         break;
                                         case 3:
-                                            $type = 'Blog';
+                                            $type = '<span class="badge badge-pill badge-geekblue">Blog</span>';
                                         break;
                                         default:
-                                            $type = 'Status';  
+                                            $type = '<span class="badge badge-pill badge-magenta">Status</span>';  
                                     }
-                                    return '<span class="badge badge-pill badge-geekblue">'.$type.'</span>';
+                                    return $type;
                                 })
                                 ->editColumn('created_at',
                                 '{{ date("d M Y", strtotime($created_at)) }}')

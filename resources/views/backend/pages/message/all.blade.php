@@ -15,12 +15,12 @@
                     <table id="data-table" class="table table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th style="width:5% ;">Status</th>
                                 <th >Sender</th>
                                 <th >Email</th>
                                 <th >Subject</th>
                                 <th style="width:10% ;">IP</th>
                                 <th style="width:10% ;">Date</th>
-                                <th style="width:5% ;">Status</th>
                                 <th style="width:15% ;">Action</th>
                             </tr>
                         </thead>
@@ -47,17 +47,18 @@
                     processing: "Fetching data..."
                 },
                 columns: [
+                    {data: 'seen_status', name: 'seen_status'},
                     {data: 'sender_name', name: 'sender_name'},
                     {data: 'sender_email', name: 'sender_email'},
                     {data: 'subject', name: 'subject'},
                     {data: 'sender_ip', name: 'sender_ip'},
                     {data: 'created_at', name: 'created_at'},
-                    {data: 'seen_status', name: 'seen_status'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
               ],
-              order: [[ 5, "desc" ]],
+              order: [[ 0, "desc" ]],
               lengthMenu: ["10", "20"],
               pageLength: 10,
+              responsive: true,
             });
 
             $('table').on('click', '.delete-button', function(e){
