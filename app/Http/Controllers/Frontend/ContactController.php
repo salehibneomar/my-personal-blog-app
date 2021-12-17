@@ -21,8 +21,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $author_id = 'S5210';
-        $site_info = User::with('settings')->findOrFail($author_id);
+        $site_info = User::with('settings')
+                          ->whereNotNull('created_at')  
+                          ->orderBy('created_at', 'asc')
+                          ->first();
         return view('frontend.pages.contact', compact('site_info'));
     }
 

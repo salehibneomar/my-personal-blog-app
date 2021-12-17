@@ -27,6 +27,7 @@ class PostController extends Controller
         $posts = DB::table('posts')->whereNull('deleted_at')->get();
         if($request->ajax()){
             $data = DataTables::of($posts)
+                                ->editColumn('id', '{{ "#".$id }}')
                                 ->editColumn('title', function($row){
                                     $title = is_null($row->title) ? '<span class="badge badge-pill badge-orange">N/A</span>' : $row->title;
                                     return $title;
@@ -73,6 +74,7 @@ class PostController extends Controller
         $posts = DB::table('posts')->whereNotNull('deleted_at')->get();
         if($request->ajax()){
             $data = DataTables::of($posts)
+                                ->editColumn('id', '{{ "#".$id }}')
                                 ->editColumn('title', function($row){
                                     $title = is_null($row->title) ? '<span class="badge badge-pill badge-orange">N/A</span>' : $row->title;
                                     return $title;
@@ -205,7 +207,7 @@ class PostController extends Controller
             $imageFile = $request->file('image');
             $imageName = hexdec(uniqid()).'_'.date('dmyHis').'.'.$imageFile->getClientOriginalExtension();
 
-            Image::make($imageFile)->resize(622,622)->save($location.$imageName);
+            Image::make($imageFile)->resize(422, 422)->save($location.$imageName);
 
             $post->image = $location.$imageName;
         }
@@ -237,7 +239,7 @@ class PostController extends Controller
 
         if($operation=='store'){
             $post->type      = 3;
-            $post->uniq_code = Str::upper(Str::uuid());
+            $post->uniq_code = Str::uuid();
             $post->user_id   = Auth::user()->id;
         }
 

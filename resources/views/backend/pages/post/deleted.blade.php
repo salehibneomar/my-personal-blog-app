@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th style="width: 8%">Type</th>
+                                <th style="width: 10%">ID</th>
                                 <th style="width: 8%">Image</th>
                                 <th>Title</th>
                                 <th style="width: 12%">Date</th>
@@ -46,12 +47,13 @@
                 },
                 columns: [
                     {data: 'type', name: 'type'},
+                    {data: 'id', name: 'id'},
                     {data: 'image', name: 'image', orderable: false, searchable: false},
                     {data: 'title', name: 'title'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
               ],
-              order: [[ 3, "desc" ]],
+              order: [[ 1, "desc" ]],
               lengthMenu: ["10", "20"],
               pageLength: 10,
               responsive: true,

@@ -22,103 +22,88 @@ Home
 @endsection
 
 @section('main')
-    <!-- Post -->
-    <div class="post">
-        <!-- Heading -->
-        <a href="#"><h1>Galaxy is on your hand</h1></a>
-        <hr>
-        <div class="in-content">
-            <p>
-                Saturn has a prominent ring system that consists of nine continuous main rings and three discontinuous arcs, composed mostly of ice particles with a smaller amount of rocky debris and dust. Sixty-two known moons orbit the planet, of which fifty-three are officially named. This does not include the hundreds of "moonlets" comprising the rings.
-            </p>
-            <a class="read-more" href="#">Read more</a>
-        </div>
-        <div class="foot-post">
-            <div class="units-row">
-                <div class="unit-100">
-                    <strong>Tags:</strong>
-                    <a href="#">Galaxy</a>,
-                    <a href="#">Human</a>,
-                    <a href="#">World</a>,
-                </div>
-                <div class="unit-100">
-                    <strong>COMMENTS:</strong> 
-                    <a href="#">3</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /post -->
+    <!-- Posts -->
+    @forelse ($posts as $post)
 
-    <!-- Post -->
-    <div class="post">
-        <!-- Heading -->
-        <a href="#"><h1>The moon will pass above or below Saturn in the sky</h1></a>
-        <hr>
-        <div class="in-content">
-            <img src="img/bluhh.jpg" alt="">
-            <p>
-                Saturn has a prominent ring system that consists of nine continuous main rings and three discontinuous arcs, composed mostly afn of ice particles with a smaller amount of rocky debris and dust.
-            </p>
-        </div>
-        <div class="foot-post">
-            <div class="units-row">
-                <div class="unit-100">
-                    <strong>Tags:</strong>
-                    <a href="#">Saturn</a>,
-                    <a href="#">Sky</a>,
-                    <a href="#">Moon</a>,
-                </div>
-                <div class="unit-100">
-                    <strong>COMMENTS:</strong> 
-                    <a href="#">3</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /post -->
+        @if ($post->type==1)
 
-    <!-- Post -->
-    <div class="post">
-        <!-- Heading -->
-        <a href="#"><h1>Moon’s orbit around the Earth </h1></a>
-        <hr>
-        <div class="in-content">
-            <p>
-                Tilted to the orbit of the Earth around the Sun – and so most of the time, the moon will pass above or below Saturn in the sky, and no occultation will occur. It is only when Saturn lies near the point that the moon’s orbit crosses the “plane of the ecliptic” that occultations can happen.
-            </p>
-            <a class="read-more" href="#">Read more</a>
-        </div>
-        <div class="foot-post">
-            <div class="units-row">
-                <div class="unit-100">
-                    <strong>Tags:</strong>
-                    <a href="#">Moon</a>,
-                    <a href="#">Orbit</a>,
-                    <a href="#">Earth</a>,
-                </div>
-                <div class="unit-100">
-                    <strong>COMMENTS:</strong> 
-                    <a href="#">221</a>
+        <div class="post pt-4">
+            <h1 class="pt-3">{{ $post->title }}</h1>
+            <div class="foot-post">
+                <div class="units-row ">
+                    <div class="unit-100">
+                        <strong>Posted:</strong>
+                        {{ $post->created_at->diffForHumans() }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /post -->    
+
+        @elseif ($post->type==2)
+
+        <div class="post">
+            <div class="row">
+                <div class="col-12">
+                    <hr class="pb-4">
+                </div>
+                <div class="col-12">
+                    <div class="in-content p-0 m-0">
+                        <img class="img-thumbnail rounded-0 picture-post" src="{{ asset($post->image) }}" alt="picture" >
+                        <p>
+                            {{ $post->title }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="foot-post">
+                <div class="units-row ">
+                    <div class="unit-100">
+                        <strong>Posted:</strong>
+                        {{ $post->created_at->diffForHumans() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @elseif ($post->type==3)
+
+        <div class="post">
+            <h1 class="pt-3">{{ $post->title }}</h1>
+            <hr>
+            <div class="in-content">
+                <img class="img-thumbnail rounded-0" src="{{ asset($post->image) }}" alt="blog_picture" >
+                <p>
+                    {{ Str::limit(strip_tags($post->details), 150, '...') }}
+                </p>
+                <a class="read-more" href="{{ route('single.post', ['slug'=>$post->slug, 'uuid'=>$post->uniq_code]) }}">Read more</a>
+            </div>
+            <div class="foot-post">
+                <div class="units-row ">
+                    <div class="unit-100">
+                        <strong>Posted:</strong>
+                        {{ $post->created_at->diffForHumans() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        @endif
+
+    @empty
+    
+        <div class="alert alert-info rounded-0 text-center">
+            I'll be posting soon 😃
+        </div>
+
+    @endforelse
+    <!-- /posts -->
+
 @endsection
 
 @section('main_pagination')
-<div class="units-row">
-    <div class="unit-50">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item "><a class="page-link" href="#">1</a></li>
-              <li class="page-item active"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </nav>
+<div class="units-row my-5">
+    <div class="unit-50 my-3">
+        {{ $posts->links('vendor.pagination.custom') }}
     </div>
 </div>
 @endsection
