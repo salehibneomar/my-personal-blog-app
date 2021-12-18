@@ -39,7 +39,7 @@ class ContactController extends Controller
 
         $request->validate(
         [
-            'sender_name'  => 'required|min:3|max:100',
+            'sender_name'  => 'required|min:3|max:50',
             'sender_email' => 'required|email',
             'subject'      => 'required|min:3|max: 250',
             'body'         => 'required|min:2|max: 65000'

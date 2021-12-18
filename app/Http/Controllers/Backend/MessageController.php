@@ -87,12 +87,15 @@ class MessageController extends Controller
 
         $deviceInfo = json_decode($message->sender_information);
         $locationInfo = Location::get($message->sender_ip);
+        
         if($locationInfo && !empty($locationInfo)){
             $locationInfo = [
-                'Country' => $locationInfo->countryName,
-                'City'    => $locationInfo->cityName,
-                'Region'  => $locationInfo->regionName,
-                'ZipCode' => $locationInfo->zipCode,
+                'Country'   => $locationInfo->countryName,
+                'City'      => $locationInfo->cityName,
+                'Region'    => $locationInfo->regionName,
+                'ZipCode'   => $locationInfo->zipCode,
+                'Latitude'  => $locationInfo->latitude,
+                'Longitude' => $locationInfo->longitude,
             ];
         }
         else{

@@ -21,66 +21,53 @@
             </li>
         </ul>
         <ul class="nav-right">
-            <li class="dropdown dropdown-animated scale-left">
-                <a href="javascript:void(0);" data-toggle="dropdown">
+            <li class="dropdown dropdown-animated scale-left" >
+                @php
+                    $notification = message_notification();
+                @endphp
+                <a href="javascript:void(0);" data-toggle="dropdown" style="position: relative;">
+                    <span class="badge badge-pill badge-primary" style="position:  absolute; font-size: 6.5pt; top: 0%; right: 0%;">{{ $notification->get('count') }}</span>
                     <i class="anticon anticon-bell notification-badge"></i>
                 </a>
-                <div class="dropdown-menu pop-notification">
+                <div class="dropdown-menu pop-notification" style="width: 300px;">
                     <div class="p-v-15 p-h-25 border-bottom d-flex justify-content-between align-items-center">
                         <p class="text-dark font-weight-semibold m-b-0">
                             <i class="anticon anticon-bell"></i>
-                            <span class="m-l-10">Notification</span>
+                            <span class="m-l-10">Notifications</span>
                         </p>
-                        <a class="btn-sm btn-default btn" href="javascript:void(0);">
+                        <a class="btn-sm btn-default btn" href="{{ route('author.message.all') }}">
                             <small>View All</small>
                         </a>
                     </div>
                     <div class="relative">
-                        <div class="overflow-y-auto relative scrollable" style="max-height: 300px">
-                            <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
+                        <div class="overflow-y-auto relative scrollable" style="max-height: 300px;">
+
+                            @forelse ($notification->get('messages') as $message)
+                            <a href="{{ route('author.message.details', ['id'=>$message->id]) }}" class="dropdown-item d-block p-15 border-bottom">
                                 <div class="d-flex">
-                                    <div class="avatar avatar-blue avatar-icon">
-                                        <i class="anticon anticon-mail"></i>
-                                    </div>
-                                    <div class="m-l-15">
-                                        <p class="m-b-0 text-dark">You received a new message</p>
-                                        <p class="m-b-0"><small>8 min ago</small></p>
+                                    <div class="px-3">
+                                        <p class="m-b-0 text-dark">
+                                            {{ Str::limit($message->subject, 20, '...') }}
+                                        </p>
+                                        <p class="m-b-0 text-break text-wrap ">
+                                        <small >
+                                            {{ 'From '.$message->sender_name.', '.$message->created_at->diffForHumans() }}
+                                            </small>
+                                        </p>
                                     </div>
                                 </div>
                             </a>
-                            <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
-                                <div class="d-flex">
-                                    <div class="avatar avatar-cyan avatar-icon">
-                                        <i class="anticon anticon-user-add"></i>
-                                    </div>
-                                    <div class="m-l-15">
-                                        <p class="m-b-0 text-dark">New user registered</p>
-                                        <p class="m-b-0"><small>7 hours ago</small></p>
-                                    </div>
+                            @empty
+                            <div class="d-flex">
+                                <div >
+                                    <p class="m-b-0 p-3">
+                                        No unread messages!
+                                    </p>
                                 </div>
-                            </a>
-                            <a href="javascript:void(0);" class="dropdown-item d-block p-15 border-bottom">
-                                <div class="d-flex">
-                                    <div class="avatar avatar-red avatar-icon">
-                                        <i class="anticon anticon-user-add"></i>
-                                    </div>
-                                    <div class="m-l-15">
-                                        <p class="m-b-0 text-dark">System Alert</p>
-                                        <p class="m-b-0"><small>8 hours ago</small></p>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="javascript:void(0);" class="dropdown-item d-block p-15 ">
-                                <div class="d-flex">
-                                    <div class="avatar avatar-gold avatar-icon">
-                                        <i class="anticon anticon-user-add"></i>
-                                    </div>
-                                    <div class="m-l-15">
-                                        <p class="m-b-0 text-dark">You have a new update</p>
-                                        <p class="m-b-0"><small>2 days ago</small></p>
-                                    </div>
-                                </div>
-                            </a>
+                            </div>
+
+                            @endforelse
+
                         </div>
                     </div>
                 </div>
@@ -118,15 +105,6 @@
                             <div>
                                 <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
                                 <span class="m-l-10">Setting</span>
-                            </div>
-                            <i class="anticon font-size-10 anticon-right"></i>
-                        </div>
-                    </a>
-                    <a href="" class="dropdown-item d-block p-h-15 p-v-10">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <i class="anticon opacity-04 font-size-16 anticon-project"></i>
-                                <span class="m-l-10">Projects</span>
                             </div>
                             <i class="anticon font-size-10 anticon-right"></i>
                         </div>
