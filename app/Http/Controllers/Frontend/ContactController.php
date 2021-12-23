@@ -72,7 +72,7 @@ class ContactController extends Controller
 
         $sender_information = 
         [
-            'Device'  => $client->isDesktop() ? 'Desktop' : $client->device(),
+            'Device'  => $client->isDesktop() ? 'Desktop' : 'Mobile',
             'Platform' => $client->platform().' '.$client->version($client->platform()),
             'Browser' => $client->browser(),
         ];
