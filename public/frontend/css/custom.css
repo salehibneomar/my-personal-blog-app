@@ -207,12 +207,31 @@ a.read-more:hover {
 .foot-post a:hover {
 	border-bottom: 1px dotted #ccc
 }
+
 .foot-post:before {
     content: url(../img/separator.png);
     position: absolute;
     top: -40px;
     left: 1px;
 }
+
+.foot-post-blog-picture{
+    position: relative;
+    margin-top: 30px !important;
+    color: #535353;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.foot-post-blog-picture:before {
+    content: url(../img/separator.png);
+    position: absolute;
+    top: -40px;
+    left: 1px;
+}
+
 /* Footer */
 footer .btn {
     color: #FFF;

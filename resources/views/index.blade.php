@@ -48,14 +48,14 @@ Home
                 </div>
                 <div class="col-12">
                     <div class="in-content p-0 m-0">
-                        <img class="img-thumbnail rounded-0 picture-post" src="{{ asset($post->image) }}" alt="picture" >
+                        <img class="img-thumbnail rounded-0" src="{{ asset($post->image) }}" alt="picture" >
                         <p>
                             {{ $post->title }}
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="foot-post">
+            <div class="foot-post-blog-picture">
                 <div class="units-row ">
                     <div class="unit-100">
                         <strong>Posted:</strong>
