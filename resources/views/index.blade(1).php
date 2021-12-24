@@ -104,7 +104,7 @@ Home
 
 @section('main_pagination')
 <div class="units-row my-5">
-    <div class="unit-50 my-3">
+    <div class="unit-60 my-3">
         {{ $posts->links('vendor.pagination.custom') }}
     </div>
 </div>

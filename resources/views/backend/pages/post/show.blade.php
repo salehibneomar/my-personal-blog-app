@@ -17,9 +17,11 @@
                         <div class="col-12 border-bottom pb-3">
                             <strong>{{ $post->title }}</strong>
                         </div>
+                        @if(!is_null($post->image))
                         <div class="col-12 mt-3 text-center">
                             <img src="{{ asset($post->image) }}" alt="blog-picture" class="img-thumbnail">
                         </div>
+                        @endif
                         <div class="col-12 mt-3 border-bottom pb-3 text-center">
                             <span class="mb-1 mr-1 badge badge-pill badge-primary">
                                 Posted: {{ date('d M y', strtotime($post->created_at)) }}

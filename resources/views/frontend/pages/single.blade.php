@@ -11,8 +11,10 @@
     <h1 class="pt-2">{{ $post->title }}</h1>
     <hr>
     <div class="in-content">
+        @if(!is_null($post->image))
         <img class="img-thumbnail rounded-0" src="{{ asset($post->image) }}" alt="blog_picture" title="{{ $post->title }}">
-        <div class="text-justify text-break my-3">
+        @endif
+        <div class="text-justify my-3 " style="overflow-wrap: break-word !important;">
             {!! $post->details !!}
         </div>
     </div>
